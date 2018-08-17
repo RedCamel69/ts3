@@ -1,0 +1,101 @@
+
+<nav class="navbar navbar-light bg-faded" style="background-color:grey">
+
+  <!--
+  <form [formGroup]="searchForm" class="form-inline">
+    <div class="row">
+      <div class="col-6">
+        <input value="" type="text" class="" id="input1" formControlName="search" placeholder="search" />
+      </div>
+      <div class="col">
+        <button type="button" class="btn btn-outline-success" id="button2" (click)="doSearch()">Search</button>
+      </div>
+    </div>
+  </form>
+      -->
+
+  <form [formGroup]="searchForm" style="min-width:100%">
+    <div class="row">
+      <div class="col-6">
+        <input type="text" class="form-control" formControlName="search" placeholder="search">
+      </div>
+      <div class="col">
+        <button type="button" class="btn btn-outline-success" id="button2" (click)="doSearch()">Search</button>
+      </div>
+
+    </div>
+  </form>
+
+</nav>
+
+<br />
+<br />
+
+{{"this is a message" | encodeUrl}}
+
+{{search.Phrase | encodeUrl}}
+
+<br />
+
+{{results.queryContext.originalQuery | encodeUrl}}
+
+<i class="fa fa-spinner fa-5x fa-spin" aria-hidden="true" id="spinner"> </i>
+
+<label>{{results.webPages.totalEstimatedMatches}} results</label>
+
+<div class="container-fluid" style="padding-bottom:150px">
+  <ul class="col-10">
+    <li *ngFor="let result of results.webPages.value" style="list-style:none">
+      <a href="{{result.url | linkHttp}}" class="resultTitle">{{result.name}}</a>
+      <br />
+      <a href="{{result.url | linkHttp}}" style="color:#006621; font-size:small">{{result.displayUrl}}</a>
+      <p style="color:#222; font-size:small">{{result.snippet}}</p>
+    </li>
+  </ul>
+</div>
+
+
+<div class="pagination" style="padding-bottom:150px">
+
+  <a class="pagination-button pagination-prev" href="" rel="prev">
+    <span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 20 20">
+        <g fill="none" fill-rule="evenodd">
+          <path d="M 0,0 20,0 20,20 0,20 Z"></path>
+          <path fill="#4A4A4A" d="M 7.625,4.5 6.5,5.625 11.375,10.5 6.5,15.375 7.625,16.5 l 6,-6 z"></path>
+        </g>
+      </svg>
+    </span>
+  </a>
+
+  <a class="" [routerLink]="['/search/']" [queryParams]="{search : search.Phrase | encodeUrl, count : count, offset : 1}">
+    <span>
+      1
+    </span>
+  </a>
+
+  <a>
+    <span (click)="doSearch(5,2)">
+      3
+    </span>
+  </a>
+
+  <a>
+    <span (click)="doSearch(5,3)">
+      3
+    </span>
+  </a>
+
+  <a class=" " href="/search?p=1&amp;q=tour+de+manche" rel="next">
+    <span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 20 20">
+        <g fill="none" fill-rule="evenodd">
+          <path d="M0 0h20v20H0z"></path>
+          <path fill="#4A4A4A" d="M7.625 4.5L6.5 5.625l4.875 4.875L6.5 15.375 7.625 16.5l6-6z"></path>
+        </g>
+      </svg>
+    </span>
+  </a>
+
+</div>
+
