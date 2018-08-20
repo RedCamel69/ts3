@@ -17,13 +17,33 @@
            class="form-control"
            id="input1"
            formControlName="search"
-           placeholder="search" />
+           placeholder="search"
+           (keyup)="onKey($event)"
+           />
+
+
+
+    <ul>
+      
+     <li>
+       <span>{{autocompleteResponse.suggestionGroups[0].searchSuggestions[0].displayText}}</span>
+     </li>
+
+    </ul>
 
   </div>
 
 
   <button type="button" class="btn btn-primary" id="button2" (click)="continue()">Continue</button>
+
+
+  <br />
+  <button type="button" class="btn btn-primary" id="button2" (click)="autocomplete('box office records')">Auto</button>
+
 </form>
 
 
 <a href="./search">Search</a>
+
+
+
