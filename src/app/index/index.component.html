@@ -19,15 +19,17 @@
            formControlName="search"
            placeholder="search"
            (keyup)="onKey($event)"
+           autocomplete="off"
            />
 
 
 
     <ul>
-      
-     <li>
-       <span>{{autocompleteResponse.suggestionGroups[0].searchSuggestions[0].displayText}}</span>
-     </li>
+
+        
+        <li *ngFor="let suggestion of (autocompleteResponse.suggestionGroups[0].searchSuggestions ? autocompleteResponse.suggestionGroups[0].searchSuggestions : [] )">
+            <span (click)="useSuggestion(suggestion)">{{suggestion.displayText}}</span>
+        </li>
 
     </ul>
 

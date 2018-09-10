@@ -33,7 +33,7 @@ export class IndexComponent implements OnInit {
     this.autocompleteResponse.suggestionGroups[0] = new suggestionGroup();
     this.autocompleteResponse.suggestionGroups[0].searchSuggestions = new searchSuggestions();
     this.autocompleteResponse.suggestionGroups[0].searchSuggestions[0] = new searchSuggestion();
-    this.autocompleteResponse.suggestionGroups[0].searchSuggestions[0].displayText = "grr";
+    this.autocompleteResponse.suggestionGroups[0].searchSuggestions[0].displayText = "The Woodland Trust";
     
 
     this.indexForm = this.fb.group({
@@ -82,8 +82,10 @@ export class IndexComponent implements OnInit {
 
     this.autocompleteService.autocomplete(term).subscribe(
       data => {
-        console.log(this.autocompleteResponse = data as Suggestions);
+          this.autocompleteResponse = data as Suggestions;
 
+          console.log(this.autocompleteResponse);
+          console.log("XXXXXXXXXXXXXX");
         console.log(this.autocompleteResponse.queryContext.originalQuery);
         console.log(this.autocompleteResponse.suggestionGroups[0]);
         console.log(this.autocompleteResponse.suggestionGroups[0].searchSuggestions);
@@ -98,5 +100,12 @@ export class IndexComponent implements OnInit {
     this.search.Phrase = this.indexForm.get('search').value;
     this.searchService.search(this.search.Phrase, 5, 0);
     this.router.navigate(['./search', { 'search': this.search.Phrase, 'count': 5, 'offset': 0 }])
+  }
+
+  useSuggestion(suggestion) {
+
+      this.indexForm.patchValue({ search: suggestion.displayText }); 
+
+      
   }
 }
