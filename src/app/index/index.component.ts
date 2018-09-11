@@ -55,10 +55,33 @@ export class IndexComponent implements OnInit {
 
   }
 
-  onKey(event: any) { // without type info
+  onKey(event: any) {
+
+      //arrow down
+      if (event.srcElement.id === "search" && event.code === "ArrowDown") {
+
+
+          var firstSuggestion = document.getElementsByClassName("suggestionList")[0];
+          if (firstSuggestion != null) {
+              console.log("highlight it");
+          }
+
+          console.log("arrow down");
+          return;
+      }
+
+      if (event.code === "Enter")
+
+      console.log(event);
+      console.log(event.code);
+
+    // without type info
     //this.values += event.target.value + ' | ';
     this.values = event.target.value;
     console.log(this.values);
+
+    
+
 
     if (this.values.length > 2) {
       this.autocomplete(this.values);

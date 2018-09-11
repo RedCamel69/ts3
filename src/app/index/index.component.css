@@ -1,3 +1,13 @@
 body{
-    background-color:darkseagreen
+    background-color:darkseagreen;
+}
+
+
+li.suggestionList{
+    background-color:aliceblue;
+
+}
+
+li.suggestionList:hover{
+    background-color:brown;
 }

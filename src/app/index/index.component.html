@@ -15,7 +15,7 @@
     <input value=""
            type="text"
            class="form-control"
-           id="input1"
+           id="search"
            formControlName="search"
            placeholder="search"
            (keyup)="onKey($event)"
@@ -27,7 +27,7 @@
     <ul>
 
         
-        <li *ngFor="let suggestion of (autocompleteResponse.suggestionGroups[0].searchSuggestions ? autocompleteResponse.suggestionGroups[0].searchSuggestions : [] )">
+        <li class="suggestionList"  *ngFor="let suggestion of (autocompleteResponse.suggestionGroups[0].searchSuggestions ? autocompleteResponse.suggestionGroups[0].searchSuggestions : [] )">
             <span (click)="useSuggestion(suggestion)">{{suggestion.displayText}}</span>
         </li>
 
