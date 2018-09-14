@@ -11,29 +11,38 @@
 
 
 <form [formGroup]="indexForm">
-  <div class="form-group">
-    <input value=""
-           type="text"
-           class="form-control"
-           id="search"
-           formControlName="search"
-           placeholder="search"
-           (keyup)="onKey($event)"
-           autocomplete="off"
-           />
+    <div class="form-group">
+        <input value=""
+               type="text"
+               class="form-control"
+               id="search"
+               formControlName="search"
+               placeholder="search"
+               (keyup)="onKey($event)"
+               autocomplete="off" />
 
-
-
-    <ul>
 
         
-        <li class="suggestionList"  *ngFor="let suggestion of (autocompleteResponse.suggestionGroups[0].searchSuggestions ? autocompleteResponse.suggestionGroups[0].searchSuggestions : [] )">
+    <ul id="list">
+
+        <li class="suggestionList" *ngFor="let suggestion of (autocompleteResponse ? autocompleteResponse.suggestionGroups[0].searchSuggestions ? autocompleteResponse.suggestionGroups[0].searchSuggestions : [] : [])">
             <span (click)="useSuggestion(suggestion)">{{suggestion.displayText}}</span>
         </li>
 
-    </ul>
+        </ul>
+        
 
-  </div>
+        <ul _ngcontent-c0="" id="list">
+            <!--bindings={
+          "ng-reflect-ng-for-of": "[object Object],[object Object"
+        }-->
+            <li _ngcontent-c0="" class="suggestionList"><span _ngcontent-c0="">plusnet</span></li>
+            <li _ngcontent-c0="" class="suggestionList"><span _ngcontent-c0="">plusnet webmail</span></li>
+            <li _ngcontent-c0="" class="suggestionList"><span _ngcontent-c0="">plumb centre</span></li>
+          
+        </ul>
+
+    </div>
 
 
   <button type="button" class="btn btn-primary" id="button2" (click)="continue()">Continue</button>

@@ -8,6 +8,10 @@ li.suggestionList{
 
 }
 
+li.suggestionListSelected {
+    background-color: green;
+}
+
 li.suggestionList:hover{
     background-color:brown;
 }

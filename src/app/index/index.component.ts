@@ -57,20 +57,153 @@ export class IndexComponent implements OnInit {
 
   onKey(event: any) {
 
+
+      var liSelected;
+      var index = -1;
+      var ul = document.getElementById('list');
+      var numberOfSuggestions = document.getElementsByTagName("li").length;
+      var currentSelection = -1;
+
+      var definingSearch = false;
+      var selectedSearch = "";
+
+      if (event.srcElement.id === "search") {
+          definingSearch = true;
+      }
+
+      if (document.getElementsByTagName("li").length > 0) {
+          definingSearch = true;
+      }
+
+
       //arrow down
-      if (event.srcElement.id === "search" && event.code === "ArrowDown") {
+      if (definingSearch && event.code === "ArrowDown") {
 
 
-          var firstSuggestion = document.getElementsByClassName("suggestionList")[0];
-          if (firstSuggestion != null) {
-              console.log("highlight it");
+          while (index < numberOfSuggestions - 1) {
+
+              index++;
+
+              if (document.getElementsByTagName("li")[index].className === "suggestionListSelected") {
+                  currentSelection = index;
+                  selectedSearch = document.getElementsByTagName("li")[index].innerText
+                  //document.getElementsByTagName("li")[index].className = "suggestionList"
+              }
+              //console.log(document.getElementsByClassName("suggestionList")[index]);
           }
 
-          console.log("arrow down");
+          var i;
+          for (i = 0; i < numberOfSuggestions; i++) {
+              document.getElementsByTagName("li")[i].className = "suggestionList"
+          }
+
+
+          if (currentSelection === -1) {
+              document.getElementsByTagName("li")[0].className = "suggestionListSelected"
+              selectedSearch = document.getElementsByTagName("li")[0].innerText
+          }
+          else {
+              if (currentSelection === numberOfSuggestions - 1) {
+                  document.getElementsByTagName("li")[0].className = "suggestionListSelected";
+                  selectedSearch = document.getElementsByTagName("li")[0].innerText
+              }
+              else {
+                  document.getElementsByTagName("li")[currentSelection + 1].className = "suggestionListSelected";
+                  selectedSearch = document.getElementsByTagName("li")[currentSelection + 1].innerText
+              }
+              
+          }
+
+          if (selectedSearch !== "") {
+              this.indexForm.patchValue({ search: selectedSearch }); 
+          }
+
+
+
+          //while (index < numberOfSuggestions) {
+
+          //    index++;
+
+          //    if (document.getElementsByTagName("li")[index].className === "suggestionList") {
+          //        alert('here');
+          //    }
+          //    //console.log(document.getElementsByClassName("suggestionList")[index]);
+          //}
+
+
+          
+
+          //var selectedSuggestion = document.getElementsByClassName("suggestionListSelected")[index];
+
+          //if (firstSelectedSuggestion) {
+          //    firstSelectedSuggestion.className = "suggestionList";
+          //    document.getElementsByClassName("suggestionList")[index]
+          //}
+
+
+          
+
+          //if (firstSuggestion != null) {
+          //    console.log("highlight it");
+          //}
+
+          //console.log("arrow down");
           return;
       }
 
-      if (event.code === "Enter")
+
+      if (definingSearch && event.code === "ArrowUp") {
+          console.log('up');
+
+         
+
+
+          index = document.getElementsByTagName("li").length;
+
+          while (index > 0) {
+
+              index--;
+
+              if (document.getElementsByTagName("li")[index].className === "suggestionListSelected") {
+                  currentSelection = index;
+                  //selectedSearch = document.getElementsByTagName("li")[index].innerText
+                  //document.getElementsByTagName("li")[index].className = "suggestionList"
+              }
+              //console.log(document.getElementsByClassName("suggestionList")[index]);
+          }
+
+          var i;
+          for (i = 0; i < numberOfSuggestions; i++) {
+              document.getElementsByTagName("li")[i].className = "suggestionList"
+          }
+
+
+          if (currentSelection === -1) {
+              document.getElementsByTagName("li")[0].className = "suggestionListSelected"
+              selectedSearch = document.getElementsByTagName("li")[0].innerText
+          }
+          else {
+              if (currentSelection === 0) {
+                  document.getElementsByTagName("li")[numberOfSuggestions-1].className = "suggestionListSelected";
+                  selectedSearch = document.getElementsByTagName("li")[numberOfSuggestions-1].innerText
+              }
+              else {
+                  document.getElementsByTagName("li")[currentSelection -1].className = "suggestionListSelected";
+                  selectedSearch = document.getElementsByTagName("li")[currentSelection - 1].innerText
+              }
+
+
+
+          }
+
+          if (selectedSearch !== "") {
+              this.indexForm.patchValue({ search: selectedSearch });
+          }
+      }
+
+      if (event.code === "Enter") {
+          this.continue();
+      }
 
       console.log(event);
       console.log(event.code);
