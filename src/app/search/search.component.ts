@@ -77,9 +77,13 @@ export class SearchComponent implements OnInit {
 
   doSearch(count: number, offset: number) {
 
-    this.search.Phrase = this.searchForm.get('search').value;
+      console.log('ggg');
 
-    this.callSearchService(this.search.Phrase, count, offset);
+      this.search.Phrase = this.searchForm.get('search').value;
+
+     // this.searchService.search(this.search.Phrase, 5, 0);
+
+    this.callSearchService(this.search.Phrase, 5, 0);
 
     
   }
