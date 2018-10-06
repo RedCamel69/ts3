@@ -387,3 +387,10 @@ a {
 .text-secondary {
     color: #ecb807 !important;
 }
+
+
+
+
+.text-center {
+    text-align: center !important;
+}
