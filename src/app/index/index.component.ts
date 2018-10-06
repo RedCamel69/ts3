@@ -254,7 +254,7 @@ export class IndexComponent implements OnInit {
 
   continue(): void {
     this.search.Phrase = this.indexForm.get('search').value;
-    this.searchService.search(this.search.Phrase, 5, 0);
+   // this.searchService.search(this.search.Phrase, 5, 0);
     this.router.navigate(['./search', { 'search': this.search.Phrase, 'count': 5, 'offset': 0 }])
   }
 
