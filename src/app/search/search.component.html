@@ -39,7 +39,7 @@
 
 {{results.queryContext.originalQuery | encodeUrl}}
 
-<i class="fa fa-spinner fa-5x fa-spin" aria-hidden="true" id="spinner"> </i>
+<i class="fa fa-spinner fa-5x fa-spin" [ngClass]="{'d-none':searchComplete==true}" aria-hidden="true" id="spinner"> </i>
 
 <label>{{results.webPages.totalEstimatedMatches}} results</label>
 
@@ -98,4 +98,7 @@
   </a>
 
 </div>
+
+
+{{this.searchComplete}}
 

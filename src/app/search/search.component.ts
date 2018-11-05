@@ -20,6 +20,8 @@ export class SearchComponent implements OnInit {
   results: SearchResponse;
   results2: SearchResponse;
 
+  searchComplete: boolean;
+
   count: number;
   offset: number;
 
@@ -92,26 +94,27 @@ export class SearchComponent implements OnInit {
 
   callSearchService(phrase: string, count: number, offset: number) {
 
+      this.searchComplete = false;
+
     var spinner = document.getElementById("spinner");
     spinner.className = "fa fa-spinner fa-5x fa-spin";
 
     this.searchService.search(phrase, count, offset).subscribe(
-      data => { this.results = data as SearchResponse; console.log(data); this.doSomething() },
-      err => console.error(err),
-      () => {
-        var spinner = document.getElementById("spinner");
-        spinner.className = "fa fa-spinner fa-5x fa-spin d-none"; //
-        console.log('finished loading');
-        console.log(this.results);
-        console.log(this.results.queryContext.originalQuery);
-      }
+        data => { this.results = data as SearchResponse; console.log(data); this.doSomething() },
+        err => console.error(err),
+        () => {
+            //var spinner = document.getElementById("spinner");
+            //spinner.className = "fa fa-spinner fa-5x fa-spin d-none"; //
+            //console.log('finished loading');
+            //console.log(this.results);
+            //console.log(this.results.queryContext.originalQuery);
+
+            this.searchComplete = true;
+        }
     );
   }
 
   doSomething() {
-    console.log('something 1')
-   
-    console.log('something 2')
 
   }
 
