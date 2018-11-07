@@ -13,6 +13,7 @@ import { LinkHttpPipe } from './shared/link-http.pipe';
 
 import { SearchService } from './search.service';
 import { AutocompleteService } from './autocomplete.service';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { AutocompleteService } from './autocomplete.service';
     IndexComponent,
     SearchComponent,
     EncodeUrlPipe,
-    LinkHttpPipe
+    LinkHttpPipe,
+    AboutComponent
   ],
   imports: [
     BrowserModule,
