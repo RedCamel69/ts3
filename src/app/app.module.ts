@@ -14,15 +14,17 @@ import { LinkHttpPipe } from './shared/link-http.pipe';
 import { SearchService } from './search.service';
 import { AutocompleteService } from './autocomplete.service';
 import { AboutComponent } from './about/about.component';
+import { DirectoryComponent } from './directory/directory.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
+   AppComponent,
     IndexComponent,
     SearchComponent,
     EncodeUrlPipe,
     LinkHttpPipe,
-    AboutComponent
+    AboutComponent,
+    DirectoryComponent
   ],
   imports: [
     BrowserModule,
