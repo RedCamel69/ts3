@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { SearchService } from '../search.service';
+import { AutocompleteService } from '../autocomplete.service';
 import { Search } from '../search';
 import { SearchResponse, webPages, queryContext,value } from '../search-response'
 import { LinkHttpPipe } from '../shared/link-http.pipe'
 import { EncodeUrlPipe } from '../shared/encode-url.pipe'
 import { ActivatedRoute } from "@angular/router";
+import { Suggestions, suggestionGroups, suggestionGroup, searchSuggestions, searchSuggestion } from '../autocomplete-response'
 
 @Component({
   selector: 'app-search',
@@ -21,11 +23,19 @@ export class SearchComponent implements OnInit {
   results2: SearchResponse;
 
   searchComplete: boolean;
+  autocompleteResponse: Suggestions;
 
   count: number;
   offset: number;
 
-  constructor(private searchService: SearchService, private fb: FormBuilder, private route: ActivatedRoute) { }
+  values = '';
+  hideSuggestions: boolean;
+  hideResults: boolean;
+
+  constructor(private searchService: SearchService,
+      private autocompleteService: AutocompleteService,
+      private fb: FormBuilder,
+      private route: ActivatedRoute) { }
 
   ngOnInit() {
 
@@ -35,7 +45,8 @@ export class SearchComponent implements OnInit {
     this.results.webPages.value = new Array<value>();
     this.results.queryContext = new queryContext();
 
-
+    this.hideSuggestions = true;
+    this.hideResults = false;
 
     this.searchForm = this.fb.group({
       search: [null, [Validators.required]]
@@ -79,6 +90,7 @@ export class SearchComponent implements OnInit {
 
   doSearch(count: number, offset: number) {
 
+      this.hideResults = true;
       console.log('ggg');
 
       this.search.Phrase = this.searchForm.get('search').value;
@@ -115,10 +127,57 @@ export class SearchComponent implements OnInit {
   }
 
   doSomething() {
-
+      this.hideResults = false;
   }
 
 
+  autocomplete(term) {
+
+      //this.searchService.search(phrase, count, offset).subscribe(
+      //  data => { this.results = data as SearchResponse; console.log(data); this.doSomething() },
+      //  err => console.error(err),
+      //  () => {
+      //    var spinner = document.getElementById("spinner");
+      //    spinner.className = "fa fa-spinner fa-5x fa-spin d-none"; //
+      //    console.log('finished loading');
+      //    console.log(this.results);
+      //    console.log(this.results.queryContext.originalQuery);
+      //  }
+      //);
+
+      this.autocompleteService.autocomplete(term).subscribe(
+          data => {
+              this.autocompleteResponse = data as Suggestions;
+
+              this.hideSuggestions = false;
+
+
+          }
+      )
+  }
+
+
+  onKey(event: any) {
+
+      // without type info
+      //this.values += event.target.value + ' | ';
+      this.values = event.target.value;
+      console.log(this.values);
+
+      if (this.values.length > 2) {
+          this.autocomplete(this.values);
+          this.hideSuggestions = false;
+      }
+  }
+
+  useSuggestion(suggestion) {
+
+      this.searchForm.patchValue({ search: suggestion.displayText });
+
+      this.hideSuggestions = true;
+
+
+  }
 }
 
 
