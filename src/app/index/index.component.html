@@ -2,12 +2,16 @@
 
  <!-- Header -->
 <header class="masthead d-flex">
+
+
+
+
     <div class="container text-center my-auto">
-        <h1 class="mb-1">Search Mii</h1>
+        <h1 class="mb-1">treely</h1>
         <h3 class="mb-5">
             <em>Private Non Tracking search</em>
         </h3>
-        
+
         <!--<a class="btn btn-primary btn-xl js-scroll-trigger" href="#about">Find Out More</a>
 
         <hr />
@@ -27,7 +31,7 @@
 
 
 
-                <ul id="list">
+                <ul [ngClass]="hideSuggestions ? 'd-none' : 'd-inline-block'" id="list">
 
                     <li class="suggestionList" *ngFor="let suggestion of (autocompleteResponse ? autocompleteResponse.suggestionGroups[0].searchSuggestions ? autocompleteResponse.suggestionGroups[0].searchSuggestions : [] : [])">
                         <span (click)="useSuggestion(suggestion)">{{suggestion.displayText}}</span>
@@ -36,7 +40,7 @@
                 </ul>
 
 
-              
+
 
             </div>
 
@@ -44,17 +48,19 @@
             <button type="button" class="btn btn-primary" id="button2" (click)="continue()">Continue</button>
 
 
-           
+
         </form>
 
     </div>
-    <div class="overlay"></div>
+    <div class="overlay">
+        
+    </div>
+
+
+   
+
 </header>
 
-
-
-
-<a href="./search">Search</a>
 
 
 

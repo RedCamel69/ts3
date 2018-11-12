@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors, ReactiveFormsModule  } from '@angular/forms';
 import { SearchService } from '../search.service';
 import { AutocompleteService } from '../autocomplete.service';
 import { Search } from '../search';
@@ -17,6 +17,8 @@ export class IndexComponent implements OnInit {
   search: Search;
   values = '';
 
+  hideSuggestions: boolean;
+
   autocompleteResponse: Suggestions;
 
   constructor(private fb: FormBuilder,
@@ -26,6 +28,8 @@ export class IndexComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
+      this.hideSuggestions = true;
 
     this.search = new Search();
     this.autocompleteResponse = new Suggestions();
@@ -217,7 +221,8 @@ export class IndexComponent implements OnInit {
 
 
     if (this.values.length > 2) {
-      this.autocomplete(this.values);
+        this.autocomplete(this.values);
+        this.hideSuggestions = false;
     }
 
   }
@@ -260,8 +265,9 @@ export class IndexComponent implements OnInit {
 
   useSuggestion(suggestion) {
 
-      this.indexForm.patchValue({ search: suggestion.displayText }); 
-
+      this.indexForm.patchValue({ search: suggestion.displayText });
+      this.hideSuggestions = true;
+      console.log(this.hideSuggestions);
       
   }
 }
