@@ -97,10 +97,24 @@ export class SearchComponent implements OnInit {
 
      // this.searchService.search(this.search.Phrase, 5, 0);
 
-    this.callSearchService(this.search.Phrase, 5, 0);
+      this.callSearchService(this.search.Phrase, count, offset);
+
+      this.count = count;
+      this.offset = offset;
 
     
   }
+
+  doSearchPrev() {
+      if (this.offset == 0) {
+          this.doSearch(this.count, this.offset);
+      }
+      else {
+          this.offset = this.offset - 1;
+          this.doSearch(this.count, this.offset);
+      }
+  }
+
 
  
 
