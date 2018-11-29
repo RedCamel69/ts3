@@ -1,8 +1,14 @@
 
 <nav class="navbar navbar-light bg-faded" style="background-color:grey; padding-top:15px">
-
-    {{this.offset}}
+    
+    offset {{this.offset}}
+    <br />
+    currentpage {{this.currentPage}}
+   
     <!--
+        
+    
+
     <form [formGroup]="searchForm" class="form-inline">
       <div class="row">
         <div class="col-6">
@@ -15,9 +21,11 @@
     </form>
         -->
 
+   
+
     <form [formGroup]="searchForm" style="min-width:100%">
         <div class="row">
-            <div class="col-8">
+            <div class="col-9">
                 <input type="text" class="form-control" formControlName="search" placeholder="search" (keyup)="onKey($event)">
 
                 <ul [ngClass]="hideSuggestions ? 'd-none' : 'd-inline-block'" id="list">
@@ -38,6 +46,13 @@
         </div>
     </form>
 
+
+    <div class="col-12" >
+        <ul style="list-style: none;">
+            <li style="float:left;padding:1vh;" (click)="flipWiki()">Web</li>
+            <li  [ngClass]="!weHaveWikiExtract ? 'd-none' : 'd-inline-block'" style="float:left;padding:1vh" (click)="flipWiki()">Wiki</li>
+        </ul>
+    </div>
 </nav>
 
 
@@ -61,21 +76,52 @@
 {{results.queryContext.originalQuery | encodeUrl}}
     -->
 
-<div style="font-size: 32px;padding-left:20%">
-    <i class="fa fa-tree fa-10x fa-spin" [ngClass]="{'d-none':searchComplete==true}" aria-hidden="true" id="spinner" style="color:green;text-align:center"> </i>
+<div style="font-size: 12px;padding-left:20%">
+    <i class="fa fa-tree fa-1x fa-spin" [ngClass]="{'d-none':searchComplete==true}" aria-hidden="true" id="spinner" style="color:green;text-align:center"> </i>
+</div>
+
+wikires? {{this.weHaveWikiExtract}}
+displayWikiExtract? {{displayWikiExtract}}
+
+<div [ngClass]="!displayWikiExtract || !weHaveWikiExtract ? 'd-none' : 'd-inline-block'" class="container-fluid" style="padding-bottom:150px">
+    <div class="col-10 card">
+        <div class="card-block">
+            <h4 class="card-title">From Wikipedia</h4>
+            <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+            {{this.wikiExtract}}
+        </div>
+        </div>
 </div>
 
 
-
-
-
 <div [ngClass]="hideResults ? 'd-none' : 'd-inline-block'" class="container-fluid" style="padding-bottom:150px">
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" (click)="previousPage()" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+            <li class="page-item"><a class="page-link" (click)="doSearch(10,(this.currentPage) * 10)">{{this.currentPage}}</a></li>
+            <li class="page-item"><a class="page-link" (click)="doSearch(10,(this.currentPage + 1) * 10)">{{this.currentPage + 1}}</a></li>
+            <li class="page-item"><a class="page-link" (click)="doSearch(10,(this.currentPage + 2) * 10)">{{this.currentPage + 2}}</a></li>
+            <li class="page-item">
+                <a class="page-link"  aria-label="Next" (click)="nextPage()">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
     <ul class="col-10">
         <li *ngFor="let result of results.webPages.value" style="list-style:none">
             <a href="{{result.url}}" class="resultTitle">{{result.name}}</a>
             <br />
 
-            <a href="{{result.url | linkHttp}}" class="resultTitle" style="color:#006621; font-size:small">{{result.url}}</a>
+            <a href="{{result.url }}" class="resultTitle" style="color:#006621; font-size:small">{{result.url}}</a>
             <br />
 
             <!--<a href="{{result.url | linkHttp}}" style="color:#006621; font-size:small">{{result.displayUrl}}</a>-->
@@ -91,9 +137,9 @@
                     <span class="sr-only">Previous</span>
                 </a>
             </li>
-            <li class="page-item"><a class="page-link" (click)="doSearch(10,0)">1</a></li>
-            <li class="page-item"><a class="page-link" (click)="doSearch(10,10)">2</a></li>
-            <li class="page-item"><a class="page-link" (click)="doSearch(10,20)">3</a></li>
+            <li class="page-item"><a class="page-link" (click)="doSearch(5,0)">1</a></li>
+            <li class="page-item"><a class="page-link" (click)="doSearch(5,5)">2</a></li>
+            <li class="page-item"><a class="page-link" (click)="doSearch(5,10)">3</a></li>
             <li class="page-item">
                 <a class="page-link" href="#" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>

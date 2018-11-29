@@ -3,7 +3,7 @@ import { FormControl, FormGroup, FormBuilder, Validators, AbstractControl, Valid
 import { SearchService } from '../search.service';
 import { AutocompleteService } from '../autocomplete.service';
 import { Search } from '../search';
-import { SearchResponse, webPages, queryContext,value } from '../search-response'
+import { WikipediaSearchResponse,SearchResponse, webPages, queryContext,value } from '../search-response'
 import { LinkHttpPipe } from '../shared/link-http.pipe'
 import { EncodeUrlPipe } from '../shared/encode-url.pipe'
 import { ActivatedRoute } from "@angular/router";
@@ -22,11 +22,19 @@ export class SearchComponent implements OnInit {
   results: SearchResponse;
   results2: SearchResponse;
 
+
+  wikiResults: WikipediaSearchResponse;
+  wikiExtract: string;
+  weHaveWikiExtract: boolean;
+  displayWikiExtract: boolean;  
+
+
   searchComplete: boolean;
   autocompleteResponse: Suggestions;
 
   count: number;
   offset: number;
+  currentPage: number;  
 
   values = '';
   hideSuggestions: boolean;
@@ -47,6 +55,8 @@ export class SearchComponent implements OnInit {
 
     this.hideSuggestions = true;
     this.hideResults = false;
+
+    this.weHaveWikiExtract = false;
 
     this.searchForm = this.fb.group({
       search: [null, [Validators.required]]
@@ -86,11 +96,13 @@ export class SearchComponent implements OnInit {
     });
 
 
+    this.currentPage = 1;
   }
 
   doSearch(count: number, offset: number) {
 
       this.hideResults = true;
+      this.currentPage = offset / count;
       console.log('ggg');
 
       this.search.Phrase = this.searchForm.get('search').value;
@@ -105,39 +117,84 @@ export class SearchComponent implements OnInit {
     
   }
 
-  doSearchPrev() {
-      if (this.offset == 0) {
-          this.doSearch(this.count, this.offset);
+  previousPage() {
+      if (this.currentPage > 1) {
+          this.currentPage = this.currentPage - 1;
       }
-      else {
-          this.offset = this.offset - 1;
-          this.doSearch(this.count, this.offset);
-      }
+      this.doSearch(10, this.currentPage * 10);
   }
 
 
+  nextPage() {
+      this.currentPage = this.currentPage + 1;
+      this.doSearch(10, this.currentPage * 10);
+  }
  
 
   callSearchService(phrase: string, count: number, offset: number) {
 
       this.searchComplete = false;
+      this.hideSuggestions = true;
 
     var spinner = document.getElementById("spinner");
     spinner.className = "fa fa-spinner fa-5x fa-spin";
+
+    this.callWikiPedia(phrase, false);
 
     this.searchService.search(phrase, count, offset).subscribe(
         data => { this.results = data as SearchResponse; console.log(data); this.doSomething() },
         err => console.error(err),
         () => {
-            //var spinner = document.getElementById("spinner");
-            //spinner.className = "fa fa-spinner fa-5x fa-spin d-none"; //
-            //console.log('finished loading');
-            //console.log(this.results);
-            //console.log(this.results.queryContext.originalQuery);
-
             this.searchComplete = true;
         }
     );
+  }
+
+
+  callWikiPedia(phrase: string, displayResults: boolean) {
+
+     
+      this.weHaveWikiExtract = false;
+
+
+      this.searchService.wikipediaSearch(phrase).subscribe(
+          data => {
+              console.log(data);
+
+              this.wikiResults = data as WikipediaSearchResponse;
+
+              console.log(this.wikiResults);
+
+              console.log(this.wikiResults.query.pages[Object.keys(this.wikiResults.query.pages)[0]].extract;
+
+              if (this.wikiResults.query.pages[Object.keys(this.wikiResults.query.pages)[0]].extract !== undefined) {
+
+                  this.weHaveWikiExtract = true;
+                  this.wikiExtract = this.wikiResults.query.pages[Object.keys(this.wikiResults.query.pages)[0]].extract;
+              }
+
+              console.log("this.weHaveWikiExtract" + this.weHaveWikiExtract);
+
+              // console.log(this.wikiResults.query.pages[0].extract);
+
+              //if (data.query.pages[Object.keys(data.query.pages)[0]].extract !== undefined) {
+
+              //    console.log(data.query.pages[Object.keys(data.query.pages)[0]].extract);
+              //}
+
+          },
+          err => console.error(err),
+          () => {
+              //this.searchComplete = true;
+
+              this.displayWikiExtract = displayResults && this.weHaveWikiExtract;
+          }
+      );
+  }  
+
+  flipWiki() {
+      this.hideResults = !this.hideResults;
+      this.displayWikiExtract = !this.displayWikiExtract;
   }
 
   doSomething() {
