@@ -25,11 +25,14 @@ export class IndexComponent implements OnInit {
     private router: Router,
     private searchService: SearchService,
     private autocompleteService: AutocompleteService
-  ) { }
+  ) {
+      
+  }
 
   ngOnInit() {
-
-      this.hideSuggestions = true;
+     
+     this.hideSuggestions = true;
+     console.log('ll');
 
     this.search = new Search();
     this.autocompleteResponse = new Suggestions();
@@ -38,7 +41,9 @@ export class IndexComponent implements OnInit {
     this.autocompleteResponse.suggestionGroups[0].searchSuggestions = new searchSuggestions();
     this.autocompleteResponse.suggestionGroups[0].searchSuggestions[0] = new searchSuggestion();
     this.autocompleteResponse.suggestionGroups[0].searchSuggestions[0].displayText = "The Woodland Trust";
-    
+
+    console.log('ll');
+    console.log(this.autocompleteResponse);
 
     this.indexForm = this.fb.group({
       search: [null, [Validators.required]]
@@ -47,15 +52,15 @@ export class IndexComponent implements OnInit {
 
 
   toggleMenu(x) {
-    console.log(x);
-    var burgerContainer = document.getElementById('burger')
-    console.log(burgerContainer);
+    //console.log(x);
+    //var burgerContainer = document.getElementById('burger')
+    //console.log(burgerContainer);
 
-    document.getElementsByClassName('bar1')[0].classList.toggle('change');
-    document.getElementsByClassName('bar2')[0].classList.toggle('change');
-    document.getElementsByClassName('bar3')[0].classList.toggle('change');
+    //document.getElementsByClassName('bar1')[0].classList.toggle('change');
+    //document.getElementsByClassName('bar2')[0].classList.toggle('change');
+    //document.getElementsByClassName('bar3')[0].classList.toggle('change');
 
-    document.getElementById('menu').classList.toggle('change');
+    //document.getElementById('menu').classList.toggle('change');
 
   }
 
@@ -224,6 +229,9 @@ export class IndexComponent implements OnInit {
         this.autocomplete(this.values);
         this.hideSuggestions = false;
     }
+    else {
+        this.hideSuggestions = true;
+    }
 
   }
 
@@ -245,12 +253,12 @@ export class IndexComponent implements OnInit {
       data => {
           this.autocompleteResponse = data as Suggestions;
 
-          console.log(this.autocompleteResponse);
-          console.log("XXXXXXXXXXXXXX");
-        console.log(this.autocompleteResponse.queryContext.originalQuery);
-        console.log(this.autocompleteResponse.suggestionGroups[0]);
-        console.log(this.autocompleteResponse.suggestionGroups[0].searchSuggestions);
-        console.log(this.autocompleteResponse.suggestionGroups[0].searchSuggestions[1].displayText);
+        //  console.log(this.autocompleteResponse);
+        //  console.log("XXXXXXXXXXXXXX");
+        //console.log(this.autocompleteResponse.queryContext.originalQuery);
+        //console.log(this.autocompleteResponse.suggestionGroups[0]);
+        //console.log(this.autocompleteResponse.suggestionGroups[0].searchSuggestions);
+        //console.log(this.autocompleteResponse.suggestionGroups[0].searchSuggestions[1].displayText);
 
 
       }

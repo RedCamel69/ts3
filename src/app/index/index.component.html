@@ -1,12 +1,15 @@
 
 
  <!-- Header -->
-<header class="masthead d-flex">
+<header class="masthead d-flex" style="padding-bottom:1vh!important;padding-top:1vh!important">
 
 
+    {{this.hideSuggestions}}
 
+    <div class="container text-center my-auto" style="margin-top:10px!important">
 
-    <div class="container text-center my-auto">
+        <img src="../../../../assets/img/tree.ico" style="height:20vh!important"/>
+
         <h1 class="mb-1">treely</h1>
         <h3 class="mb-5">
             <em>Private Non Tracking search</em>
@@ -14,12 +17,15 @@
 
         <!--<a class="btn btn-primary btn-xl js-scroll-trigger" href="#about">Find Out More</a>
 
-        <hr />
-        <br />
-        <br />-->
+    <hr />
+    <br />
+    <br />-->
 
         <form [formGroup]="indexForm" class="container text-center">
             <div class="form-group">
+
+
+
                 <input value=""
                        type="text"
                        class="form-control"
@@ -30,6 +36,8 @@
                        autocomplete="off" />
 
 
+
+               
 
                 <ul [ngClass]="hideSuggestions ? 'd-none' : 'd-inline-block'" id="list">
 
