@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 
-import { HttpClientModule } from '@angular/common/http';  // replaces previous Http service
+import { HttpClientModule, HttpClientJsonpModule} from '@angular/common/http';  // replaces previous Http service
 
 import { AppComponent } from './app.component';
 import { IndexComponent } from './index/index.component';
@@ -30,7 +30,8 @@ import { DirectoryComponent } from './directory/directory.component';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+      HttpClientModule,
+      HttpClientJsonpModule
   ],
   providers: [SearchService, AutocompleteService],  
   bootstrap: [AppComponent]

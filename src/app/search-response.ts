@@ -19,3 +19,22 @@ export class value {
 export class queryContext {
     originalQuery: string;
 }
+
+
+export class WikipediaSearchResponse {
+    batchcomplete: string;
+    query : WikiQuery
+}
+
+export class WikiQuery {
+    //normalized: object;
+    pages: WikiPage[];
+} 
+
+export class WikiPage {
+    extract: string;
+    ns: number;
+    pageid: number;
+    title: string;
+    
+}
